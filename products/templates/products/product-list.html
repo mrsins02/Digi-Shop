@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load poll_extras %}
+{% block title %}
+    فروشگاه
+{% endblock %}
+
+{% block body_content %}
+    <section id="advertisement">
+        <div class="container">
+            <img src="/static/images/shop/advertisement.jpg" alt=""/>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-9 padding-right">
+                    <div class="features_items"><!--features_items-->
+                        <h2 class="title text-center">فروشگاه</h2>
+                        {% for product in products %}
+                            <div class="col-sm-4 product-component">
+                                <a href="{% url "product_detail" product.slug %}">
+                                    <div class="product-image-wrapper" style=" border: 1px solid #5e5e5e;">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="{{ product.productpicture_set.all.first.picture }}"
+                                                     width="268" height="250" alt="{{ product.english_title }}"/>
+                                                <h2>{{ product.title }}</h2>
+                                                <h2>{{ product.price|currency }} ريال</h2>
+                                                <p>{{ product.about|truncatewords:25 }}</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i
+                                                        class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                                                {% if product.count <= 5 %}
+                                                    <p style="color: #ac2925">فقط {{ product.count }}عدد در انبار مانده
+                                                        است!</p>
+                                                {% endif %}
+                                            </div>
+
+                                            {#                                    <img src="/static/images/home/sale.png" class="new" alt=""/>#}
+                                            {#                                    <img src="/static/images/home/new.png" class="new" alt=""/>#}
+                                        </div>
+                                        <div class="choose">
+                                            <ul class="nav nav-pills nav-justified">
+                                                <li><a href=""><i class="fa fa-plus-square"></i>لیست علاقه مندی ها</a>
+                                                </li>
+                                                <li>
+                                                    {% for category in product.category.all %}
+                                                        <a href="{% url "shop" %}{{ category }}">{{ category }}, </a>
+                                                    {% endfor %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page=1"><<</a></li>
+                                <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                                <li class="
+                                    {% if i == page_number %}
+                                    active
+                                    {% endif %}
+                                "><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                                <li><a href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
+                            {% endif %}
+                        </ul>
+                    </div><!--features_items-->
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>دسته بندی محصولات</h2>
+                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            دسته 1
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="sportswear" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a href="">محصول 1 </a></li>
+                                            <li><a href="">محصول 2 </a></li>
+                                            <li><a href="">محصول 3 </a></li>
+                                            <li><a href="">محصول 4</a></li>
+                                            <li><a href="">محصول 5</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            دسته 2
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="mens" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a href="">محصول 1 </a></li>
+                                            <li><a href="">محصول 2 </a></li>
+                                            <li><a href="">محصول 3 </a></li>
+                                            <li><a href="">محصول 4</a></li>
+                                            <li><a href="">محصول 5</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 1</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 2</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 3</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 4</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 5</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 6</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#">محصول 7</a></h4>
+                                </div>
+                            </div>
+                        </div><!--/category-productsr-->
+
+                        <div class="brands_products"><!--brands_products-->
+                            <h2>برنـد ها</h2>
+                            <div class="brands-name">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href=""> <span class="pull-left">(50)</span>برنـد 1</a></li>
+                                    <li><a href=""> <span class="pull-left">(56)</span>برنـد 2</a></li>
+                                    <li><a href=""> <span class="pull-left">(27)</span>برنـد 3</a></li>
+                                    <li><a href=""> <span class="pull-left">(32)</span>برنـد 4</a></li>
+                                    <li><a href=""> <span class="pull-left">(5)</span>برنـد 5</a></li>
+                                </ul>
+                            </div>
+                        </div><!--/brands_products-->
+
+                        <div class="price-range"><!--price-range-->
+                            <h2>فیلتـر قیمـت</h2>
+                            <div class="well">
+                                <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000"
+                                       data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br/>
+                                <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+                            </div>
+                        </div><!--/price-range-->
+
+                        <div class="shipping text-center"><!--shipping-->
+                            <img src="/static/images/home/shipping.jpg" alt=""/>
+                        </div><!--/shipping-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
