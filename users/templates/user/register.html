@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+    ثبت نام
+{% endblock %}
+{% block body_content %}
+    <div class="container">
+        <section id="form"><!--form-->
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <div class="signup-form"><!--sign up form-->
+                        <h2 class="text-center">ثبت نام</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="text-danger" style="margin-bottom: 20px">
+                                <ul>
+                                    {% for error in form.non_field_errors %}
+                                        <span>&bull; {{ error }}</span>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div style="margin-bottom: 20px">
+                                {{ form.username.label_tag }}
+                                {{ form.username }}
+                                {{ form.username.errors }}
+                            </div>
+                            <div style="margin-bottom: 20px">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                <span class="text-warning">&bull; {{ form.email.help_text }}</span>
+                                {{ form.email.errors }}
+                            </div>
+                            <div style="margin-bottom: 20px">
+                                {{ form.password.label_tag }}
+                                {{ form.password }}
+                                <span class="text-warning">&bull; {{ form.password.help_text }}</span>
+                                {{ form.password.errors }}
+                            </div>
+                            <div style="margin-bottom: 20px">
+                                {{ form.repeat_password.label_tag }}
+                                {{ form.repeat_password }}
+                                {{ form.repeat_password.errors }}
+                            </div>
+                            <button type="submit" class="btn btn-default">ثبت نام</button>
+                        </form>
+                    </div><!--/sign up form-->
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
