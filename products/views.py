@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from .models import Product, ProductPicture
+from .models import Product, ProductPicture, Category, Brand
 from .utils import slider_set_generator
 
 
@@ -16,8 +16,12 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         _context = super(ProductListView, self).get_context_data()
         page_number = self.request.GET.get("page", 1)
+        categories = Category.objects.all()
+        brands = Brand.objects.all()
         context = {
-            "page_number": int(page_number)
+            "page_number": int(page_number),
+            "categories": categories,
+            "brands": brands,
         }
         _context.update(context)
         return _context

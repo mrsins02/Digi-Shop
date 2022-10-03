@@ -18,6 +18,8 @@ class Category(models.Model):
     title = models.CharField(max_length=64, verbose_name="عنوان")
     english_title = models.CharField(max_length=64, verbose_name="عنوان انگلیسی")
     slug = models.SlugField(db_index=True, editable=False)
+    parent = models.ForeignKey("Category", on_delete=models.CASCADE, verbose_name="دسته بندی والد", null=True,
+                               blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.english_title)
