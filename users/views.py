@@ -59,5 +59,5 @@ class RegisterView(FormView):
         new_user = User.objects.create(username=username, email=email)
         new_user.set_password(password)
         new_user.save()
-        # todo:send email
+        # todo:send sms
         return super(RegisterView, self).form_valid(form)
