@@ -52,8 +52,8 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/admin/"><i class="fa fa-user"></i> حساب کاربـری</a></li>
                             <li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
-                            <li><a href="{% url "login" %}"><i class="fa fa-lock"></i> ورود</a></li>
-                            <li><a href="{% url "register" %}"><i class="fa fa-lock"></i> ثبت نام</a></li>
+                            <li><a href="{% url "login" %}" class="{% if request.resolver_match.url_name == "login" %}active{% endif %}"><i class="fa fa-lock"></i> ورود</a></li>
+                            <li><a href="{% url "register" %}" class="{% if request.resolver_match.url_name == "register" %}active{% endif %}"><i class="fa fa-lock"></i> ثبت نام</a></li>
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                         </ul>
                     </div>
@@ -84,8 +84,9 @@
                     </div>
                     <div class="mainmenu pull-right">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html" class="active">خـانه</a></li>
-                            <li><a href="{% url "shop" %}">فروشگـاه</a></li>
+                            <li><a href="{% url "home" %}" class="{% if request.resolver_match.url_name == "home" %}active{% endif %}">خـانه</a>
+                            </li>
+                            <li><a href="{% url "shop" %}" class="{% if request.resolver_match.url_name == "shop" %}active{% endif %}">فروشگـاه</a></li>
                             <li class="dropdown"><a href="#">اخبـار<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">آخریـن اخبـار</a></li>
