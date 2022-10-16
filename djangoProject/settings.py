@@ -14,6 +14,7 @@ from pathlib import Path
 
 import django.core.mail.backends.console
 import rest_framework.authentication
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     'products.apps.ProductConfig',
     'users.apps.UserConfig',
     'main.apps.MainConfig',
-    'polls.apps.PollsConfig'
+    'polls.apps.PollsConfig',
+    'favorites.apps.FavoritesConfig'
 
 ]
 
@@ -111,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # custom user
 AUTH_USER_MODEL = "users.User"
+LOGIN_URL = reverse_lazy("login")
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -142,4 +144,3 @@ MEDIA_ROOT = 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

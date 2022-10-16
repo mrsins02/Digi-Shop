@@ -1,0 +1,47 @@
+{% load poll_extras %}
+<div class="container">
+    <div class="table-responsive cart_info">
+        <table class="table table-condensed">
+            <thead>
+            <tr class="cart_menu">
+                <td class="image">کـالا</td>
+                <td class="description"></td>
+                <td class="price">قیمت</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for favorite in favorites %}
+                <tr>
+                    <td class="cart_product">
+                        <a href="{% url "product_detail" slug=favorite.product.slug %}"><img
+                                src="{{ favorite.product.productpicture_set.all.first.picture.url }}"
+                                width="110" height="110" alt=""></a>
+                    </td>
+                    <td class="cart_description">
+                        <h5>
+                            <a href="{% url "product_detail" slug=favorite.product.slug %}"
+                               style="color: #3A3A3A">{{ favorite.product.title }}</a>
+                        </h5>
+                    </td>
+                    <td class="cart_price">
+                        <p>{{ favorite.product.price|currency }} ريال</p>
+                    </td>
+                    <td class="cart_quantity">
+                        <div class="cart_quantity_button">
+                            <a class="cart_quantity_up" href=""><abbr
+                                    title="افزودن به سبد خرید">&plus;</abbr></a>
+                        </div>
+                    </td>
+                    <td class="cart_delete">
+                        <a class="cart_quantity_delete"
+                           onclick="deleteFromFavorites({{ favorite.product.id }})"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+            {% empty %}
+                <td>محصولی موجود نیست.</td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
