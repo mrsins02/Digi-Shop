@@ -55,25 +55,30 @@
                                     </div>
                                 </a>
                             </div>
+                        {% empty %}
+                            <h2 class="text-warning text-center">محصولی موجود نیست!</h2>
                         {% endfor %}
-
-                        <ul class="pagination">
-                            {% if page_obj.has_previous %}
-                                <li><a href="?page=1"><<</a></li>
-                                <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
-                            {% endif %}
-                            {% for i in paginator.page_range %}
-                                <li class="
+                        {% if products %}
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page=1"><<</a></li>
+                                    <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    <li class="
                                     {% if i == page_number %}
                                     active
                                     {% endif %}
                                 "><a href="?page={{ i }}">{{ i }}</a></li>
-                            {% endfor %}
-                            {% if page_obj.has_next %}
-                                <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
-                                <li><a href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
-                            {% endif %}
-                        </ul>
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                                    <li><a href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+
+
                     </div><!--features_items-->
                 </div>
                 <div class="col-sm-3">
