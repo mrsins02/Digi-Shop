@@ -10,7 +10,14 @@ class ProductListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = Product.objects.filter(is_active=True).prefetch_related("productpicture_set")
+        if category := self.kwargs.get("category"):
+            queryset = Product.objects.filter(is_active=True, category__slug__exact=category).prefetch_related(
+                "productpicture_set")
+        elif brand := self.kwargs.get("brand"):
+            queryset = Product.objects.filter(is_active=True, brand__slug__exact=brand).prefetch_related(
+                "productpicture_set")
+        else:
+            queryset = Product.objects.filter(is_active=True).prefetch_related("productpicture_set")
         return queryset
 
     def get_context_data(self, **kwargs):

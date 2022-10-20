@@ -17,7 +17,8 @@
                             <ul>
                                 <li><a href="{% url "categories" category=category.slug %}">{{ category }}</a></li>
                                 {% for category_ in category.category_set.all %}
-                                    <li><a href="{% url "categories" category=category_.slug %}">{{ category_ }}</a></li>
+                                    <li><a href="{% url "categories" category=category_.slug %}">{{ category_ }}</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -31,21 +32,22 @@
         <div class="brands-name">
             <ul class="nav nav-pills nav-stacked">
                 {% for brand in brands %}
-                    <li><a href=""> <span class="pull-left">({{ brand.product_set.count }})</span>{{ brand.title }}</a>
+                    <li><a href="{% url "brands" brand=brand.slug %}"> <span
+                            class="pull-left">({{ brand.product_set.count }})</span>{{ brand.title }}</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
     </div><!--/brands_products-->
 
-        <div class="price-range"><!--price-range-->
-            <h2>فیلتـر قیمـت</h2>
-            <div class="well">
-                <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000000"
-                       data-slider-step="10000" data-slider-value="[1000,50000000]" id="sl2"><br/>
-                <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
-            </div>
-        </div><!--/price-range-->
+    <div class="price-range"><!--price-range-->
+        <h2>فیلتـر قیمـت</h2>
+        <div class="well">
+            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000000"
+                   data-slider-step="10000" data-slider-value="[1000,50000000]" id="sl2"><br/>
+            <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+        </div>
+    </div><!--/price-range-->
 
     <div class="shipping text-center"><!--shipping-->
         <img src="/static/images/home/shipping.jpg" alt=""/>
