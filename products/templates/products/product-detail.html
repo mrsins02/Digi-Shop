@@ -213,94 +213,27 @@
 
                         <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>1.250.000 ريال</h2>
-                                                    <p>توضیحات کوتاه محصول</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
+                                {% for set in related_products %}
+                                    <div class="item {% if forloop.first %}active{% endif %} ">
+                                        {% for item in set %}
+                                            <div class="col-sm-4">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <img src="{{ item.productpicture_set.all.first.picture.url }}"
+                                                                 width="268" height="250" alt="{{ item.english_title }}"/>
+                                                            <h2>{{ item.title }}</h2>
+                                                            <h2>{{ item.price |currency }} ريال</h2>
+                                                            <button type="button" class="btn btn-default add-to-cart"><i
+                                                                    class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>1.250.000 ريال</h2>
-                                                    <p>توضیحات کوتاه محصول</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>1.250.000 ريال</h2>
-                                                    <p>توضیحات کوتاه محصول</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>{{ product.price }} ريال</h2>
-                                                    <p>{{ product.about|truncatewords:32 }}</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>1.250.000 ريال</h2>
-                                                    <p>توضیحات کوتاه محصول</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="/static/images/home/product.jpg" alt=""/>
-                                                    <h2>1.250.000 ريال</h2>
-                                                    <p>توضیحات کوتاه محصول</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <a class="left recommended-item-control" href="#recommended-item-carousel"
                                data-slide="prev">

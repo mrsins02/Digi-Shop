@@ -7,7 +7,7 @@ from .utils import slider_set_generator
 class ProductListView(ListView):
     template_name = "products/product-list.html"
     context_object_name = "products"
-    paginate_by = 9
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Product.objects.filter(is_active=True).prefetch_related("productpicture_set")
@@ -39,8 +39,16 @@ class ProductDetailView(DetailView):
         _context = super(ProductDetailView, self).get_context_data()
         pictures = ProductPicture.objects.filter(product__slug=self.kwargs.get("slug"))
         pictures_set = slider_set_generator(pictures, 3)
+        categories = Category.objects.all()
+        brands = Brand.objects.all()
+        related_products = Product.objects.filter(brand=self.object.brand).exclude(id=self.object.id).order_by(
+            "-modified")[0:6]
+        related_products = slider_set_generator(related_products, 3)
         context = {
-            "pictures_set": pictures_set
+            "pictures_set": pictures_set,
+            "categories": categories,
+            "brands": brands,
+            "related_products": related_products,
         }
         _context.update(context)
         return _context
