@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Product, ProductPicture, Category, Brand
@@ -16,6 +17,8 @@ class ProductListView(ListView):
         elif brand := self.kwargs.get("brand"):
             queryset = Product.objects.filter(is_active=True, brand__slug__exact=brand).prefetch_related(
                 "productpicture_set")
+        elif search_query := self.request.GET.get("search"):
+            queryset = Product.objects.filter(Q(title__icontains=search_query) | Q(english_title__icontains=search_query))
         else:
             queryset = Product.objects.filter(is_active=True).prefetch_related("productpicture_set")
         return queryset
