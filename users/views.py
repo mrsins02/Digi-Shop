@@ -1,18 +1,25 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, logout, authenticate
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.forms import LoginForm, RegisterForm
 from users.models import User
 
 user = get_user_model()
 
 
-class LoginView(FormView):
+class LoginView(UserPassesTestMixin, FormView):
+
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return False
+        else:
+            return True
+
     template_name = "user/login.html"
     form_class = LoginForm
     success_url = reverse_lazy("home")
@@ -30,8 +37,20 @@ class LoginView(FormView):
                 "form": form,
             })
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.test_func():
+            return redirect(reverse("home"))
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-class RegisterView(FormView):
+
+class RegisterView(UserPassesTestMixin, FormView):
+
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return False
+        else:
+            return True
+
     template_name = "user/register.html"
     form_class = RegisterForm
     success_url = reverse_lazy("login")
@@ -61,3 +80,8 @@ class RegisterView(FormView):
         new_user.save()
         # todo:send sms
         return super(RegisterView, self).form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.test_func():
+            return redirect(reverse("home"))
+        return super(RegisterView, self).dispatch(request, *args, **kwargs)
