@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    تماس با ما
+{% endblock %}
+{% block body_content %}
+    <div id="contact-page" class="container">
+        <div class="bg">
+            <div class="row">
+                <div class="container">
+                    <div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">
+                        <h2 class="title text-center">تمـاس با مـا</h2>
+                        <div id="gmap" class="contact-map">
+                            <img src="{% static "images/home/Map.jpg" %}" alt="Map"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="contact-form">
+                        <h2 class="title text-center">با ما در ارتباط باشیـد</h2>
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group col-md-6">
+                                {{ form.name_and_family.label_tag }}
+                                {{ form.name_and_family }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group col-md-12">
+                                {{ form.subject.label_tag }}
+                                {{ form.subject }}
+                            </div>
+                            <div class="form-group col-md-12">
+                                {{ form.message.label_tag }}
+                                {{ form.message }}
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="submit" name="submit" class="btn btn-primary pull-right" value="ارسـال">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="contact-info">
+                        <h2 class="title text-center">اطلاعات تماس</h2>
+                        <address>
+                            <p>{{ setting.title }}</p>
+                            <p>{{ setting.address }}</p>
+                            <p>تلفن تماس : </p>
+                            {% for phone in setting.phone.all %}
+                                <p>{{ phone }}</p>
+                            {% endfor %}
+
+                            <p>فکس : {{ setting.fax }}</p>
+                            <p style="font-family: tahoma;">ایمیـل : {{ setting.email }}</p>
+                        </address>
+                        <div class="social-networks">
+                            <h2 class="title text-center">شبکـه های اجتـماعی</h2>
+                            <span class="socials-share share">
+									<ul>
+										<a href="{{ setting.instagram }}">
+											<li>
+												<label>اینستاگرام</label>
+												<img src="{% static "images/socials/5fcb1110d6c18c0c11093c6a_Instagram-01-p-1600.png" %}"
+                                                     width="40" height="40"/>
+											</li>
+										</a>
+										<a href="{{ setting.telegram }}">
+											<li>
+												<label>تلگرام</label>
+												<img src="{% static "images/socials/3W72119s5BjWPGGUiZ9pqnZoj8JHYxCCp9dtn2QVeutFMyS7USjQzFhQBankXumkpSBD1yM1k24zdp3M4hxygjV1CEEMZAfGnBdLVoHgQ94F6JaFe3UCw8.png" %}"
+                                                     width="32" height="32"/>
+											</li>
+										</a>
+										<a href="{{ setting.twitter }}">
+											<li>
+												<label>توییتر</label>
+												<img src="{% static "images/socials/social-media-computer-icons-logo-facebook-social-network-chimichanga.jpg" %}"
+                                                     width="32" height="32"/>
+											</li>
+										</a>
+									</ul>
+								</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/#contact-page-->
+{% endblock %}
+
