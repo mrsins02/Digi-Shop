@@ -1,0 +1,36 @@
+<div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>دسته بندی پست ها</h2>
+                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            {% for category in categories %}
+                                {% if not category.parent %}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordian"
+                                                   href="#{{ category.slug }}">
+                                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                    {{ category.title }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="{{ category.slug }}" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <ul>
+                                                    {% for sub_category in category.category_set.all %}
+                                                        <li><a href="">{{ sub_category.title }}</a></li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div><!--/category-productsr-->
+                        <div class="shipping text-center"><!--shipping-->
+                            <img src="/static/images/home/shipping.jpg" alt=""/>
+                        </div><!--/shipping-->
+
+                    </div>
+                </div>

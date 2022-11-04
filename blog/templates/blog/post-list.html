@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    وبلاگ
+{% endblock %}
+{% block body_content %}
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-9">
+                    <div class="blog-post-area">
+                        <h2 class="title text-center">آخریـن پست ها</h2>
+                        {% for post in posts %}
+                            <div class="single-blog-post">
+                                <h3>{{ post.title }}</h3>
+                                <div class="post-meta">
+                                    <ul>
+                                        <li><i class="fa fa-user"></i> {{ post.author.username }}</li>
+                                        <li><i class="fa fa-calendar"></i> {{ post.created|date }}</li>
+                                        <li><i class="fa fa-edit"></i> {{ post.modified|date }}</li>
+                                    </ul>
+                                    <span>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-half-o"></i>
+								</span>
+                                </div>
+                                <a href="{% url "post_detail" slug=post.slug %}">
+                                    <img src="{{ post.picture.url }}" width="862" height="398" alt="">
+                                </a>
+                                <p>{{ post.text|truncatewords:128 }}</p>
+                                <a class="btn btn-primary" href="{% url "post_detail" slug=post.slug %}">ادامـه مطلب</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% include "blog/includes/side-panel.html" %}
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

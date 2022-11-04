@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.views.generic.base import View, TemplateView
-
+from products.models import Category as ShopCategory
+from blog.models import Category as BlogCategory
 from main.forms import ContactUsForm
 from main.models import SiteSetting
 
@@ -56,7 +57,13 @@ class ContactUsView(FormView):
 
 
 def header_component(request):
-    return render(request, "includes/header-component.html")
+    shop_categories = ShopCategory.objects.all()
+    blog_categories = BlogCategory.objects.all()
+
+    return render(request, "includes/header-component.html", {
+        "shop_categories": shop_categories,
+        "blog_categories": blog_categories,
+    })
 
 
 def footer_component(request):

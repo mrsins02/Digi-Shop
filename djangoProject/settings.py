@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'users.apps.UserConfig',
     'main.apps.MainConfig',
     'polls.apps.PollsConfig',
-    'favorites.apps.FavoritesConfig'
+    'favorites.apps.FavoritesConfig',
+    'blog.apps.BlogConfig',
 
 ]
 

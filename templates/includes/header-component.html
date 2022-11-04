@@ -76,7 +76,8 @@
         <div class="container">
             <div class="row">
 
-                <form method="get" action="/shop/">
+                <form method="get"
+                      action="{% if request.resolver_match.url_name == "post_list" %}/blog/{% else %}/shop/{% endif %}">
                     <div class="row col-sm-3">
                         <div class="search_box pull-left">
                             <input type="text" name="search" placeholder="جستـجو"/>
@@ -100,16 +101,35 @@
                                    class="{% if request.resolver_match.url_name == "home" %}active{% endif %}">خـانه</a>
                             </li>
                             <li><a href="{% url "shop" %}"
-                                   class="{% if request.resolver_match.url_name == "shop" %}active{% endif %}">فروشگـاه</a>
-                            </li>
-                            <li class="dropdown"><a href="#">اخبـار<i class="fa fa-angle-down"></i></a>
+                                   class="{% if request.resolver_match.url_name == "shop" %}active{% endif %}">فروشگـاه<i
+                                    class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">آخریـن اخبـار</a></li>
-                                    <li><a href="blog-single.html">صفحـه خبـر</a></li>
+                                    {% for category in shop_categories %}
+                                        <li>
+                                            <a href="{% url "categories" category=category.slug %}">{{ category.title }}</a>
+                                        </li>
+                                    {% endfor %}
+
                                 </ul>
                             </li>
-                            <li><a href="{% url "about" %}">درباره مـا</a></li>
-                            <li><a href="{% url "contact" %}">تماس با مـا</a></li>
+                            <li class="dropdown{% if request.resolver_match.url_name == "post_list" %}active{% endif %}">
+                                <a href="{% url "post_list" %}">وبلاگ<i
+                                        class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    {% for category in blog_categories %}
+                                        <li>
+                                            <a href="{% url "post_category" category=category.slug %}">{{ category.title }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </li>
+                            <li><a href="{% url "about" %}"
+                                   class="{% if request.resolver_match.url_name == "about" %}active{% endif %}">درباره
+                                مـا</a></li>
+                            <li><a href="{% url "contact" %}"
+                                   class="{% if request.resolver_match.url_name == "contact" %}active{% endif %}">تماس
+                                با مـا</a></li>
                         </ul>
                     </div>
                 </div>
