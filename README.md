@@ -11,6 +11,6 @@ Django based digital E-Shop.
 ## Installation
 
 on the top of directory:
-`pip install -r requirements.txt`
+`pip install -r requirements.txt`<br>
 after packages installed:
 `python manage.py runserver`
