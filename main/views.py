@@ -5,16 +5,17 @@ from django.views.generic.base import View, TemplateView
 from products.models import Category as ShopCategory
 from blog.models import Category as BlogCategory
 from main.forms import ContactUsForm
-from main.models import SiteSetting
+from main.models import SiteSetting, Slider
 
 
 class HomeView(TemplateView):
     template_name = "main/home.html"
 
     def get_context_data(self, **kwargs):
+        sliders = Slider.objects.filter(is_active=True)
         _context = super(HomeView, self).get_context_data(**kwargs)
         context = {
-
+            "sliders": sliders,
         }
         _context.update(context)
         return _context
@@ -24,8 +25,8 @@ class AboutUsView(TemplateView):
     template_name = "main/about.html"
 
     def get_context_data(self, **kwargs):
-        _context = super(AboutUsView, self).get_context_data(**kwargs)
         setting = SiteSetting.objects.filter(is_active=True).first()
+        _context = super(AboutUsView, self).get_context_data(**kwargs)
         context = {
             "setting": setting
         }
@@ -47,8 +48,8 @@ class ContactUsView(FormView):
         return super(ContactUsView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        _context = super(ContactUsView, self).get_context_data(**kwargs)
         setting = SiteSetting.objects.filter(is_active=True).first()
+        _context = super(ContactUsView, self).get_context_data(**kwargs)
         context = {
             "setting": setting
         }

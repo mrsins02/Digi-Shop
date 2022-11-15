@@ -11,7 +11,7 @@ def get_file_ext(file):
 
 def product_name_generator(instance, file):
     ext = get_file_ext(file)
-    return f"media/{instance.product.slug}/{instance.product.slug}{ext}"
+    return f"products/{instance.product.slug}/{instance.product.slug}{ext}"
 
 
 class Category(models.Model):
