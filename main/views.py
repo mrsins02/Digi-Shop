@@ -88,4 +88,5 @@ def header_component(request):
 
 
 def footer_component(request):
-    return render(request, "includes/footer-component.html")
+    setting = SiteSetting.objects.get(is_active=True)
+    return render(request, "includes/footer-component.html", {"setting": setting})
