@@ -14,7 +14,6 @@ class PostListView(ListView):
     def get_queryset(self):
         queryset = super(PostListView, self).get_queryset()
         if category := self.kwargs.get("category"):
-            print(self.kwargs.get("category"), "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             queryset = queryset.filter(category__category__slug__exact=category)
         if author := self.kwargs.get("username"):
             queryset = queryset.filter(author__username__exact=author)
@@ -37,7 +36,7 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
-        comments = PostComment.objects.filter(post_id=self.object.id).order_by("-created")
+        comments = PostComment.objects.filter(post_id=self.object.id)
         next_obj = Post.objects.filter(id=self.object.id + 1)
         next_obj_slug = None
         if next_obj.exists():
@@ -70,7 +69,7 @@ def add_comment(request):
                     new_comment = PostComment.objects.create(parent_id=None, user_id=user_id, post_id=post_id,
                                                              text=text)
                     new_comment.save()
-                    comments = PostComment.objects.filter(post_id=post_id).order_by("-created")
+                    comments = PostComment.objects.filter(post_id=post_id)
                     html_text = render_to_string("blog/includes/comment-component.html", {"comments": comments})
                     return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
                 else:
@@ -80,7 +79,7 @@ def add_comment(request):
                                                                  post_id=post_id,
                                                                  text=text)
                         new_comment.save()
-                        comments = PostComment.objects.filter(post_id=post_id).order_by("-created")
+                        comments = PostComment.objects.filter(post_id=post_id)
                         html_text = render_to_string("blog/includes/comment-component.html", {"comments": comments})
                         return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
                     else:

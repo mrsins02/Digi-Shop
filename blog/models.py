@@ -65,3 +65,6 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="پست")
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(verbose_name="متن نظر")
+
+    class Meta:
+        ordering = "-created",

@@ -59,7 +59,7 @@ class ProductDetailView(DetailView):
         brands = Brand.objects.all()
         related_products = Product.objects.filter(brand=self.object.brand).exclude(id=self.object.id).order_by(
             "-modified")[0:4]
-        comments = ProductComment.objects.filter(product_id=self.object.id).order_by("-created")
+        comments = ProductComment.objects.filter(product_id=self.object.id)
         context = {
             "pictures_set": pictures_set,
             "categories": categories,
@@ -85,7 +85,7 @@ def add_comment(request):
                     new_comment = ProductComment.objects.create(parent_id=None, user_id=user_id, product_id=product_id,
                                                                 text=text)
                     new_comment.save()
-                    comments = ProductComment.objects.filter(product_id=product_id).order_by("-created")
+                    comments = ProductComment.objects.filter(product_id=product_id)
                     html_text = render_to_string("products/includes/comment-component.html", {"comments": comments})
                     return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
                 else:
@@ -95,7 +95,7 @@ def add_comment(request):
                                                                     product_id=product_id,
                                                                     text=text)
                         new_comment.save()
-                        comments = ProductComment.objects.filter(product_id=product_id).order_by("-created")
+                        comments = ProductComment.objects.filter(product_id=product_id)
                         html_text = render_to_string("products/includes/comment-component.html", {"comments": comments})
                         return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
                     else:

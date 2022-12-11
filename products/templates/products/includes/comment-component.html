@@ -16,7 +16,7 @@
                         <button type="button" class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</button>
                     </div>
                 </li>
-                {% for second_comment in comment.postcomment_set.all %}
+                {% for second_comment in comment.productcomment_set.all %}
                     <li class="media second-media">
                         <a class="pull-right" href="#">
                             <img class="media-object" src="/static/images/blog/Customer.jpg" alt="">

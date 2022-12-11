@@ -98,3 +98,6 @@ class ProductComment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(verbose_name="متن نظر")
+
+    class Meta:
+        ordering = "-created",
