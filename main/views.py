@@ -58,8 +58,8 @@ class ContactUsView(FormView):
 
 
 def header_component(request):
-    shop_categories = ShopCategory.objects.all()
-    blog_categories = BlogCategory.objects.all()
+    shop_categories = ShopCategory.objects.filter(parent_id=None)
+    blog_categories = BlogCategory.objects.filter(parent_id=None)
 
     return render(request, "includes/header-component.html", {
         "shop_categories": shop_categories,

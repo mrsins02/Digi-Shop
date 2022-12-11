@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from captcha.fields import ReCaptchaField
 
 
 class LoginForm(forms.Form):
@@ -16,6 +17,7 @@ class LoginForm(forms.Form):
         # min_length=8,
         label="رمز عبور"
     )
+    captcha_form = ReCaptchaField()
 
 
 class RegisterForm(forms.Form):

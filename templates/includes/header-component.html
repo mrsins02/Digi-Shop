@@ -106,8 +106,17 @@
                                 <ul role="menu" class="sub-menu">
                                     {% for category in shop_categories %}
                                         <li>
-                                            <a href="{% url "categories" category=category.slug %}">{{ category.title }}</a>
+                                            <a style="color:#FEE37D"
+                                               href="{% url "categories" category=category.slug %}">
+                                                <h4>{{ category.title }}</h4></a>
                                         </li>
+                                        {% for sub_category in category.category_set.all %}
+                                            <li>
+                                                <a href="{% url "categories" category=sub_category.slug %}">
+                                                    <h5 style="margin-right: 20px;">{{ sub_category.title }}</h5></a>
+                                            </li>
+                                        {% endfor %}
+
                                     {% endfor %}
 
                                 </ul>
@@ -118,8 +127,15 @@
                                 <ul role="menu" class="sub-menu">
                                     {% for category in blog_categories %}
                                         <li>
-                                            <a href="{% url "post_category" category=category.slug %}">{{ category.title }}</a>
+                                            <a style="color:#FEE37D"
+                                               href="{% url "post_category" category=category.slug %}">{{ category.title }}</a>
                                         </li>
+                                        {% for sub_category in category.category_set.all %}
+                                            <li>
+                                                <a href="{% url "categories" category=sub_category.slug %}">
+                                                    <h5 style="margin-right: 20px;">{{ sub_category.title }}</h5></a>
+                                            </li>
+                                        {% endfor %}
                                     {% endfor %}
 
                                 </ul>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_jalali',
     "django_render_partial",
     'sorl.thumbnail',
+    'captcha',
 
     # Internal APPs
     'products.apps.ProductConfig',
@@ -145,3 +146,7 @@ MEDIA_ROOT = 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Captcha
+RECAPTCHA_PUBLIC_KEY = "6LcJRmUjAAAAAMRnAQVJmlGR5cKLhbzKjRNvhzS0"
+RECAPTCHA_PRIVATE_KEY = "6Ld8SW8jAAAAAGsbYcH3hvjkpORS9wJ1-dg_gRj4"
