@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    خبرنامه
+{% endblock %}
+
+{% block body_content %}
+    {% if status %}
+        <div class="text-center">
+            <h3 class="text-success">
+                شما در خبر نامه عضو شدید.
+            </h3>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url "home" %}'">برو به صفحه
+                اصلی
+            </button>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="text-danger">
+                عضویت با خطا مواجه شد!
+            </h3>
+            <h5> لطفا دوباره امتحان کنید.
+            </h5>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{% url "home" %}'">برو به صفحه
+                اصلی
+            </button>
+        </div>
+    {% endif %}
+    <br>
+{% endblock %}

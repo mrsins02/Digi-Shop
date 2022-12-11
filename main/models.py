@@ -58,3 +58,7 @@ class Slider(models.Model):
     class Meta:
         verbose_name = "بنر"
         verbose_name_plural = "بنر های سایت"
+
+
+class Newsletter(models.Model):
+    email = models.EmailField(unique=True)

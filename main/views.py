@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView
 from django.views.generic.base import View, TemplateView
 from products.models import Category as ShopCategory
 from blog.models import Category as BlogCategory
 from main.forms import ContactUsForm
-from main.models import SiteSetting, Slider
+from main.models import SiteSetting, Slider, Newsletter
 
 
 class HomeView(TemplateView):
@@ -55,6 +56,25 @@ class ContactUsView(FormView):
         }
         _context.update(context)
         return _context
+
+
+def newsletter(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        if email:
+            try:
+                new_email = Newsletter.objects.create(email=email)
+                new_email.save()
+                return render(request, "main/newsletter.html", {
+                    "status": 1
+                })
+            except:
+                return render(request, "main/newsletter.html", {
+                    "status": 0
+                })
+        return render(request, "main/newsletter.html", {
+            "status": 0
+        })
 
 
 def header_component(request):
