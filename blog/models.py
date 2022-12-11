@@ -57,3 +57,11 @@ class Post(models.Model):
         verbose_name = "پست"
         verbose_name_plural = "پست ها"
         ordering = ("-created",)
+
+
+class PostComment(models.Model):
+    parent = models.ForeignKey("PostComment", on_delete=models.CASCADE, blank=True, null=True, verbose_name="والد")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="کاربر")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="پست")
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(verbose_name="متن نظر")

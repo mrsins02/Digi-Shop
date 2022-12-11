@@ -2738,3 +2738,10 @@ h2.title {
     color: #FE980F;
 }
 
+#product-box {
+    background: rgba(250, 133, 0, 0.35);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
+    border-radius: 10px;
+}

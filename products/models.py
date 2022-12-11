@@ -4,6 +4,8 @@ import os
 from django.utils.text import slugify
 from django_jalali.db import models as jmodels
 
+from users.models import User
+
 
 def get_file_ext(file):
     return os.path.splitext(file)[1]
@@ -88,3 +90,11 @@ class ProductPicture(models.Model):
         verbose_name = "تصویر محصول"
         verbose_name_plural = "تصاویر محصولات"
         ordering = ("-is_default",)
+
+
+class ProductComment(models.Model):
+    parent = models.ForeignKey("ProductComment", on_delete=models.CASCADE, blank=True, null=True, verbose_name="والد")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="کاربر")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(verbose_name="متن نظر")

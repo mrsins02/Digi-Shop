@@ -1,7 +1,12 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
-from .models import Product, ProductPicture, Category, Brand
+from django.contrib.auth.decorators import login_required
+from users.models import User
+from .models import Product, ProductPicture, Category, Brand, ProductComment
 from .utils import slider_set_generator
 
 
@@ -18,7 +23,8 @@ class ProductListView(ListView):
             queryset = Product.objects.filter(is_active=True, brand__slug__exact=brand).prefetch_related(
                 "productpicture_set")
         elif search_query := self.request.GET.get("search"):
-            queryset = Product.objects.filter(Q(title__icontains=search_query) | Q(english_title__icontains=search_query))
+            queryset = Product.objects.filter(
+                Q(title__icontains=search_query) | Q(english_title__icontains=search_query))
         else:
             queryset = Product.objects.filter(is_active=True).prefetch_related("productpicture_set")
         return queryset
@@ -52,13 +58,52 @@ class ProductDetailView(DetailView):
         categories = Category.objects.all()
         brands = Brand.objects.all()
         related_products = Product.objects.filter(brand=self.object.brand).exclude(id=self.object.id).order_by(
-            "-modified")[0:6]
-        related_products = slider_set_generator(related_products, 3)
+            "-modified")[0:4]
+        comments = ProductComment.objects.filter(product_id=self.object.id).order_by("-created")
         context = {
             "pictures_set": pictures_set,
             "categories": categories,
             "brands": brands,
             "related_products": related_products,
+            "comments": comments,
         }
         _context.update(context)
         return _context
+
+
+def add_comment(request):
+    if request.user.is_authenticated:
+        parent_id = request.GET.get("parent_id")
+        user_id = request.user.id
+        product_id = request.GET.get("product_id")
+        text = request.GET.get("text")
+        product = Product.objects.filter(id=product_id)
+        if product.exists():
+            product = product.first()
+            if text:
+                if parent_id == "none":
+                    new_comment = ProductComment.objects.create(parent_id=None, user_id=user_id, product_id=product_id,
+                                                                text=text)
+                    new_comment.save()
+                    comments = ProductComment.objects.filter(product_id=product_id).order_by("-created")
+                    html_text = render_to_string("products/includes/comment-component.html", {"comments": comments})
+                    return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
+                else:
+                    parent_comment = ProductComment.objects.filter(id=parent_id)
+                    if parent_comment.exists():
+                        new_comment = ProductComment.objects.create(parent_id=parent_id, user_id=user_id,
+                                                                    product_id=product_id,
+                                                                    text=text)
+                        new_comment.save()
+                        comments = ProductComment.objects.filter(product_id=product_id).order_by("-created")
+                        html_text = render_to_string("products/includes/comment-component.html", {"comments": comments})
+                        return JsonResponse({"html": html_text, "status": 200, "message": "نظر با موفقیت ثبت شد."})
+                    else:
+                        return JsonResponse({"status": 404, "message": "نظر پیدا نشد!"})
+
+
+            else:
+                return JsonResponse({"status": 400, "message": "متن نظر را وارد کنید!"})
+        else:
+            return JsonResponse({"status": 404, "message": "محصول یافت نشد!"})
+    return JsonResponse({"status": 302, "message": "شما وارد حساب خود نشده اید!"})

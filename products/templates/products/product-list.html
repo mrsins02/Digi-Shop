@@ -21,7 +21,9 @@
                         {% for product in products %}
                             <div class="col-sm-4 product-component">
                                 <a href="{% url "product_detail" product.slug %}">
-                                    <div class="product-image-wrapper" style=" border: 1px solid #5e5e5e;">
+                                    <div class="product-image-wrapper" id="product-box"
+{#                                         style=" border: 1px solid #5e5e5e;"#}
+                                    >
                                         <div class="single-products">
                                             <div class="productinfo text-center">
                                                 <img src="{{ product.productpicture_set.all.first.picture.url }}"
