@@ -6,8 +6,8 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from users.models import User
-from .models import Product, ProductPicture, Category, Brand, ProductComment
-from .utils import slider_set_generator
+from .models import Product, ProductPicture, Category, Brand, ProductComment, ProductView
+from .utils import slider_set_generator, get_client_ip
 
 
 class ProductListView(ListView):
@@ -60,6 +60,11 @@ class ProductDetailView(DetailView):
         related_products = Product.objects.filter(brand=self.object.brand).exclude(id=self.object.id).order_by(
             "-modified")[0:4]
         comments = ProductComment.objects.filter(product_id=self.object.id)
+        ip = get_client_ip(self.request)
+        visit = ProductView.objects.filter(product_id=self.object.id, ip=ip)
+        if not visit.exists():
+            new_visit = ProductView.objects.create(product_id=self.object.id, ip=ip)
+            new_visit.save()
         context = {
             "pictures_set": pictures_set,
             "categories": categories,

@@ -1,22 +1,31 @@
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView
 from django.views.generic.base import View, TemplateView
-from products.models import Category as ShopCategory
+from products.models import Category as ShopCategory, Product
 from blog.models import Category as BlogCategory
 from main.forms import ContactUsForm
 from main.models import SiteSetting, Slider, Newsletter
+from products.utils import slider_set_generator
 
 
 class HomeView(TemplateView):
     template_name = "main/home.html"
 
     def get_context_data(self, **kwargs):
-        sliders = Slider.objects.filter(is_active=True)
         _context = super(HomeView, self).get_context_data(**kwargs)
+        sliders = Slider.objects.filter(is_active=True)
+        most_viewed = Product.objects.filter(is_active=True).annotate(views=Count("productview")).order_by("-views")[:8]
+        most_viewed = slider_set_generator(most_viewed, 4)
+        recent_products = Product.objects.filter(is_active=True).order_by("-created")[:8]
+        recent_products = slider_set_generator(recent_products, 4)
+        print(most_viewed)
         context = {
             "sliders": sliders,
+            "most_viewed": most_viewed,
+            "recent_products": recent_products,
         }
         _context.update(context)
         return _context
