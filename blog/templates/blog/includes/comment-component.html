@@ -5,7 +5,11 @@
                 <li class="media">
 
                     <a class="pull-right" href="#">
-                        <img class="media-object" src="/static/images/blog/Customer.jpg" alt="">
+                        {% if request.user.avatar %}
+                            <img class="media-object" src="{{ request.user.avatar.url }}" alt="">
+                        {% else %}
+                            <img class="media-object" style="border-radius: 10px;" src="/static/images/egiocMMHeJxW8ZDVer7lMv-xw7ReN-vH.jpeg" alt="">
+                        {% endif %}
                     </a>
                     <div class="media-body">
                         <ul class="sinlge-post-meta">
@@ -13,13 +17,19 @@
                             <li><i class="fa fa-calendar"></i>{{ comment.created|date }}</li>
                         </ul>
                         <p>{{ comment.text|linebreaks }}</p>
-                        <button type="button" class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</button>
+                        <button type="button" class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i
+                                class="fa fa-reply"></i>پاسـخ
+                        </button>
                     </div>
                 </li>
                 {% for second_comment in comment.postcomment_set.all %}
                     <li class="media second-media">
                         <a class="pull-right" href="#">
-                            <img class="media-object" src="/static/images/blog/Customer.jpg" alt="">
+                            {% if request.user.avatar %}
+                            <img class="media-object" src="{{ request.user.avatar.url }}" alt="">
+                        {% else %}
+                            <img class="media-object" style="border-radius: 10px;" src="/static/images/egiocMMHeJxW8ZDVer7lMv-xw7ReN-vH.jpeg" alt="">
+                        {% endif %}
                         </a>
                         <div class="media-body">
                             <ul class="sinlge-post-meta">
@@ -28,7 +38,8 @@
                             </ul>
                             <p>{{ second_comment.text|linebreaks }}</p>
                             <button class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i
-                                    class="fa fa-reply"></i>پاسـخ</button>
+                                    class="fa fa-reply"></i>پاسـخ
+                            </button>
                         </div>
                     </li>
                 {% endfor %}
