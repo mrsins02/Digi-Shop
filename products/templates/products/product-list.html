@@ -22,7 +22,7 @@
                             <div class="col-sm-4 product-component">
                                 <a href="{% url "product_detail" product.slug %}">
                                     <div class="product-image-wrapper" id="product-box"
-{#                                         style=" border: 1px solid #5e5e5e;"#}
+                                            {#                                         style=" border: 1px solid #5e5e5e;"#}
                                     >
                                         <div class="single-products">
                                             <div class="productinfo text-center">
@@ -31,7 +31,8 @@
                                                 <h2>{{ product.title }}</h2>
                                                 <h2>{{ product.price|currency }} ريال</h2>
                                                 {#                                                <p>{{ product.about|truncatewords:25 }}</p>#}
-                                                <a href="#" class="btn btn-default add-to-cart"><i
+                                                <a onclick="addToCart({{ product.id }})"
+                                                   class="btn btn-default add-to-cart"><i
                                                         class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
                                                 {% if product.count <= 5 %}
                                                     <p style="color: #ac2925">فقط {{ product.count }}عدد در انبار مانده

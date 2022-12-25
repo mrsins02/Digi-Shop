@@ -1,8 +1,10 @@
+// Product image gallery
 function productImageChanger(imageURL) {
     $("#product-main-image").attr("src", imageURL)
 
 }
 
+// Favorite system
 function addToFavorites(productId) {
     var productId = productId;
     $.get("/favorites/add-to-favorites/", {
@@ -52,6 +54,60 @@ function cleanFavorites() {
     })
 }
 
+// Cart system
+function addToCart(productId) {
+    var productId = productId;
+    $.get("/cart/add-to-cart/", {
+        product_id: productId,
+    }).then(res => {
+        if (res.status === 200) {
+            Swal.fire({
+                icon: 'success', text: 'محصول به سبد خرید اضافه شد!',
+            })
+        }
+        ;
+        if (res.status === 400) {
+            Swal.fire({
+                icon: 'warning', text: 'محصول قبلا به سبد خرید اضافه شده است!',
+            })
+        }
+        ;
+        if (res.status === 404) {
+            Swal.fire({
+                icon: 'error', text: 'محصول یافت نشد!',
+            })
+        }
+        ;
+    })
+}
+
+function deleteFromCart(productId) {
+    var productId = productId;
+    $.get("/cart/delete-from-cart/", {
+        product_id: productId,
+    }).then(res => {
+
+        if (res.status === 404) {
+            Swal.fire({
+                icon: 'error', text: 'محصول یافت نشد!',
+            })
+            $("#cart_items").html(res.html)
+        } else {
+            $("#cart_items").html(res)
+        }
+        ;
+    })
+}
+
+function cleanCart() {
+    $.get("/cart/clean-cart/", {}).then(res => {
+        swal.fire("سبد خرید خالی شد!")
+        $("#cart_items").html(res)
+    })
+}
+
+// Comment system
+// **Products**
 function addProductComment(productId) {
     var text = $("#comment-text").val();
     var parentId = $("#parent-id").val();
@@ -93,6 +149,8 @@ function addProductComment(productId) {
         ;$("#comment-area").html(res.html);
     })
 }
+
+// **Posts**
 function addPostComment(postId) {
     var text = $("#comment-text").val();
     var parentId = $("#parent-id").val();
@@ -134,6 +192,8 @@ function addPostComment(postId) {
         ;$("#comment-area").html(res.html);
     })
 }
+
+// If comment is a reply edits parent id element
 function fillParentId(parentId) {
     $("#parent-id").val(parentId);
     document.getElementById("comment-form").scrollIntoView({behavior: "smooth"});

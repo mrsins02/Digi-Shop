@@ -107,7 +107,8 @@
                             <ul class="nav nav-tabs">
                                 <li><a href="#details" data-toggle="tab">جزئیات</a></li>
                                 <li><a href="#companyprofile" data-toggle="tab">محصولات دیگر سازنده</a></li>
-                                <li class="active"><a href="#reviews" data-toggle="tab">نظرات ({{ comments.count }})</a></li>
+                                <li class="active"><a href="#reviews" data-toggle="tab">نظرات ({{ comments.count }})</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="tab-content">
@@ -123,8 +124,9 @@
                                                 <div class="productinfo text-center">
                                                     <img src="{{ product.productpicture_set.all.first.picture.url }}"
                                                          alt=""/>
-                                                    <h2>{{ product.price|currency }} ريال</h2>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i
+                                                    <h2>xczczc{{ product.price|currency }} ريال</h2>
+                                                    <button type="button" onclick="addToCart({{ product.id }})"
+                                                            class="btn btn-default add-to-cart"><i
                                                             class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
                                                     </button>
                                                 </div>
@@ -163,44 +165,44 @@
 
                         </div>
                     </div><!--/category-tab-->
-                    {#                    <div class="recommended_items"><!--recommended_items-->#}
-                    {#                        <h2 class="title text-center">محصولات پیشنهادی</h2>#}
-                    {##}
-                    {#                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">#}
-                    {#                            <div class="carousel-inner">#}
-                    {#                                {% for set in related_products %}#}
-                    {#                                    <div class="item {% if forloop.first %}active{% endif %} ">#}
-                    {#                                        {% for item in set %}#}
-                    {#                                            <div class="col-sm-4">#}
-                    {#                                                <div class="product-image-wrapper">#}
-                    {#                                                    <div class="single-products">#}
-                    {#                                                        <div class="productinfo text-center">#}
-                    {#                                                            <img src="{{ item.productpicture_set.all.first.picture.url }}"#}
-                    {#                                                                 width="268" height="250"#}
-                    {#                                                                 alt="{{ item.english_title }}"/>#}
-                    {#                                                            <h2>{{ item.title }}</h2>#}
-                    {#                                                            <h2>{{ item.price |currency }} ريال</h2>#}
-                    {#                                                            <button type="button" class="btn btn-default add-to-cart"><i#}
-                    {#                                                                    class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد#}
-                    {#                                                            </button>#}
-                    {#                                                        </div>#}
-                    {#                                                    </div>#}
-                    {#                                                </div>#}
-                    {#                                            </div>#}
-                    {#                                        {% endfor %}#}
-                    {#                                    </div>#}
-                    {#                                {% endfor %}#}
-                    {#                            </div>#}
-                    {#                            <a class="left recommended-item-control" href="#recommended-item-carousel"#}
-                    {#                               data-slide="prev">#}
-                    {#                                <i class="fa fa-angle-left"></i>#}
-                    {#                            </a>#}
-                    {#                            <a class="right recommended-item-control" href="#recommended-item-carousel"#}
-                    {#                               data-slide="next">#}
-                    {#                                <i class="fa fa-angle-right"></i>#}
-                    {#                            </a>#}
-                    {#                        </div>#}
-                    {#                    </div><!--/recommended_items-->#}
+                                        <div class="recommended_items"><!--recommended_items-->
+                                            <h2 class="title text-center">محصولات پیشنهادی</h2>
+
+                                            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    {% for set in related_products %}
+                                                        <div class="item {% if forloop.first %}active{% endif %} ">
+                                                            {% for item in set %}
+                                                                <div class="col-sm-4">
+                                                                    <div class="product-image-wrapper">
+                                                                        <div class="single-products">
+                                                                            <div class="productinfo text-center">
+                                                                                <img src="{{ item.productpicture_set.all.first.picture.url }}"
+                                                                                     width="268" height="250"
+                                                                                     alt="{{ item.english_title }}"/>
+                                                                                <h2>{{ item.title }}</h2>
+                                                                                <h2>{{ item.price |currency }} ريال</h2>
+                                                                                <button type="button" class="btn btn-default add-to-cart"><i
+                                                                                        class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <a class="left recommended-item-control" href="#recommended-item-carousel"
+                                                   data-slide="prev">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                                <a class="right recommended-item-control" href="#recommended-item-carousel"
+                                                   data-slide="next">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </div>
+                                        </div><!--/recommended_items-->
                 </div>
                 <div class="col-sm-3">
                     {% include "products/includes/sidepanel.html" %}
