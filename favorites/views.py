@@ -1,11 +1,12 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views.generic import ListView
-from favorites.models import Favorite
-from products.models import Product
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 from users.models import User
+from products.models import Product
+from favorites.models import Favorite
 
 
 class FavoritesView(LoginRequiredMixin, ListView):

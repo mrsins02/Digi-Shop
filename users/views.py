@@ -1,13 +1,11 @@
-from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.urls import reverse_lazy, reverse
-from django.views.generic.base import View
 from django.views.generic.edit import FormView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from users.forms import LoginForm, RegisterForm
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth import get_user_model, login, authenticate
+
 from users.models import User
+from users.forms import LoginForm, RegisterForm
 
 user = get_user_model()
 

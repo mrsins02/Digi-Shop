@@ -1,9 +1,8 @@
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.generic import ListView, DetailView
 
 from blog.models import Post, Category, PostComment
+from django.views.generic import ListView, DetailView
 
 
 class PostListView(ListView):

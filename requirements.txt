@@ -2,6 +2,7 @@ asgiref
 attrs
 CacheControl
 cachy
+captcha
 certifi
 cffi
 charset-normalizer
@@ -13,13 +14,13 @@ Cython
 defusedxml
 distlib
 dj-rest-auth
-Django
+Django~=4.1.3
 django-allauth
 django-extensions
 django-jalali
 django-render-partial
 django-rest-framework
-djangorestframework
+djangorestframework~=3.14.0
 djangorestframework-simplejwt
 dulwich
 filelock

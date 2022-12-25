@@ -1,13 +1,10 @@
 from django.db.models import Q
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.views.generic import ListView, DetailView
-from django.contrib.auth.decorators import login_required
-from users.models import User
-from .models import Product, ProductPicture, Category, Brand, ProductComment, ProductView
+
 from .utils import slider_set_generator, get_client_ip
+from .models import Product, ProductPicture, Category, Brand, ProductComment, ProductView
 
 
 class ProductListView(ListView):

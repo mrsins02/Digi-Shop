@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models import Sum
 
-from products.models import Product
 from users.models import User
+from products.models import Product
 
 
 class Cart(models.Model):

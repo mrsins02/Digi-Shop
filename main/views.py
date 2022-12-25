@@ -1,14 +1,14 @@
 from django.db.models import Count
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import FormView
-from django.views.generic.base import View, TemplateView
-from products.models import Category as ShopCategory, Product
-from blog.models import Category as BlogCategory
+from django.views.generic.base import TemplateView
+
 from main.forms import ContactUsForm
-from main.models import SiteSetting, Slider, Newsletter
 from products.utils import slider_set_generator
+from blog.models import Category as BlogCategory
+from main.models import SiteSetting, Slider, Newsletter
+from products.models import Category as ShopCategory, Product
 
 
 class HomeView(TemplateView):

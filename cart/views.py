@@ -1,7 +1,7 @@
-from django.http import JsonResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
+from django.http import JsonResponse
 from django.views.generic.base import View
+from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
